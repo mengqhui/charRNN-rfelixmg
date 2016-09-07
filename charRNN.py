@@ -28,13 +28,22 @@ class charRNN():
             #self.model.add(Dense(vocabulary_size))
             self.model.add(Activation('softmax'))
 
-            self.optimizer = RMSprop(lr=0.0001)
+            self.optimizer = RMSprop(lr=0.01)
             self.model.compile(loss='categorical_crossentropy', optimizer=self.optimizer)
 
             print 'Model available'
 
         except Exception as err:
             print "Error initializing network: ", err
+
+    def update_parameter(self, lr_decrease=None):
+
+        if lr_decrease is not None:
+            new_lr = np.float32(self.model.optimizer.lr.get_value() * lr_decrease)
+            self.model.optimizer.lr.set_value(new_lr)
+            return new_lr
+
+
 
     def train(self, X, y, batch_size=128, epochs=1, verbose=1):
 

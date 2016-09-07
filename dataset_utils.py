@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 class Text:
 
@@ -53,5 +54,28 @@ class Text:
                 V[i, t, char_idx[char]] = 1
 
         return V
+
+    def split_dataset(self, number_samples, test_percentage):
+
+        indices = range(number_samples)
+        random.shuffle(indices)
+        tsh_id = number_samples - int(number_samples * test_percentage)
+        train_index = np.array(indices[:tsh_id])
+        test_index = np.array(indices[tsh_id:])
+
+        return train_index, test_index
+
+    def save_split(self, split_file_name, split_dataset):
+        np.save(split_file_name, split_dataset)
+
+    def load_split(self, split_file_name):
+        return np.load(split_file_name)
+
+
+
+
+
+
+
 
 

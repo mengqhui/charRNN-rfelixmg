@@ -1,0 +1,10 @@
+*.pyc
+*.iml
+*.xml
+# exclude models saved
+models/*
+# exclude report images
+src/img/*
+# exclude report information
+src/history/*
+

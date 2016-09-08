@@ -12,7 +12,7 @@ from keras.utils.data_utils import get_file
 
 class charRNN():
 
-    def __init__(self, sample_length, vocabulary_size):
+    def __init__(self, sample_length, vocabulary_size, hidden_states=128, learning_rate=0.01):
         try:
 
             print "Building model..."
@@ -21,14 +21,14 @@ class charRNN():
             self.model = Sequential()
             # Add to the model Long-Short Term Memory (LSTM)
             # First layer - Number of Hidden Neurons
-            self.model.add(LSTM(128, input_length=sample_length, input_dim=vocabulary_size, return_sequences=True))
+            self.model.add(LSTM(hidden_states, input_length=sample_length, input_dim=vocabulary_size, return_sequences=True))
 
             self.model.add(LSTM(vocabulary_size, return_sequences=True))
 
             #self.model.add(Dense(vocabulary_size))
             self.model.add(Activation('softmax'))
 
-            self.optimizer = RMSprop(lr=0.01)
+            self.optimizer = RMSprop(lr=learning_rate)
             self.model.compile(loss='categorical_crossentropy', optimizer=self.optimizer)
 
             print 'Model available'
